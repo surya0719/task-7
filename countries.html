@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var request=new XMLHttpRequest();
+        request.open('GET','https://restcountries.com/v3.1/all',true)
+        request.send();
+        request.onload=function()
+        {
+            var data=JSON.parse(request.response)
+            //console.log(data[0]);
+            data.filter((element)=>{
+                for(let key in element.region)
+                {
+                    if(element.region[key]=element.region="Asia") // 1.Get all the countries from the Asia continent /region using the Filter function 
+                    {
+                        console.log(element.name.common)
+                    }
+                }
+            })
+          var rest=data.filter((element)=>element.population)
+          var rest1=rest.filter((element)=>element.population<200000) // 2.Get all the countries with a population of less than 2 lakhs using Filter function
+          var rest2=rest1.map((element)=>element.name.common)
+          console.log(rest2)
+
+          var rest3=data.reduce((acc,element)=>acc+element.population,0) // 4.Print the total population of countries using reduce function
+          console.log("Total population of countries are",rest3)  //now the current population are 783.66=7,830,000,000.
+
+          var rest4=data.filter((element)=>element.currencies)
+          var rest5=rest4.filter((element)=>element.currencies.USD) // 5.Print the country which uses US Dollars as currency.
+          var rest6=rest5.map((element)=>element.name.common)
+          console.log("Countries that use USD currency",rest6)
+
+
+          data.forEach((element)=>{                                   // 3.Print the following details name, capital, flag using forEach function
+          console.log(element.name.common,element.capital,element.flags.png,element.flag); // in code i use both flag and flags 
+           })
+
+        }   
+    </script>
+</body>
+</html>
